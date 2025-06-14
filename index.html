@@ -1,142 +1,363 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shop Webpage</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #fff;
-        }
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px;
-            background-color: #f4f4f4;
-        }
-        .logo {
-            flex: 1;
-            font-size: 24px;
-            font-weight: bold;
-        }
-        .search-bar {
-            flex: 2;
-            text-align: center;
-        }
-        .search-bar input {
-            width: 80%;
-            padding: 10px;
-            font-size: 16px;
-        }
-        .promo {
-            flex: 1;
-            text-align: right;
-            font-size: 20px;
-            font-weight: bold;
-            color: #ff5733;
-            font-family: 'Courier New', Courier, monospace;
-        }
-        .slideshow-container {
-            position: relative;
-            max-width: 100%;
-            margin: auto;
-        }
-        .slides {
-            display: none;
-            width: 100%;
-            cursor: pointer;
-        }
-        .main-content {
-            display: flex;
-            padding: 20px;
-        }
-        .left-box, .center-box, .right-box {
-            flex: 1;
-            margin: 10px;
-            padding: 20px;
-            border: 1px solid #ccc;
-            text-align: center;
-        }
-        footer {
-            text-align: center;
-            padding: 15px;
-            background-color: #f4f4f4;
-        }
-        .seasonal-section, .weather-section {
-            text-align: center;
-            padding: 20px;
-            background-color: #eee;
-            margin: 10px;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shop Webpage - Advanced</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet" />
+  <style>
+    /* Base Reset */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f2f2f2;
+      color: #333;
+      line-height: 1.6;
+      perspective: 1000px;
+    }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+    
+    /* Container */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    
+    /* Sticky Header with Navigation */
+    header {
+      background: #fff;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 0;
+    }
+    .logo {
+      font-size: 24px;
+      font-weight: 700;
+      color: #2c3e50;
+    }
+    /* Navigation Menu */
+    .nav-menu {
+      display: flex;
+      gap: 20px;
+    }
+    .nav-menu li { position: relative; }
+    .nav-menu li a {
+      padding: 8px 12px;
+      color: #2c3e50;
+      transition: color 0.3s ease;
+    }
+    .nav-menu li a:hover { color: #ff5733; }
+    /* Dropdown Menu */
+    .dropdown {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: #fff;
+      padding: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      border-radius: 5px;
+    }
+    .nav-menu li:hover .dropdown { display: block; }
+    .dropdown li { margin-bottom: 8px; }
+    .dropdown li:last-child { margin-bottom: 0; }
+    
+    /* Advanced Search Bar */
+    .search-container {
+      position: relative;
+      flex: 1;
+      margin: 0 20px;
+    }
+    .search-container input {
+      width: 100%;
+      padding: 10px;
+      border: 2px solid #ddd;
+      border-radius: 30px;
+      outline: none;
+      transition: all 0.3s ease;
+    }
+    .search-container input:focus {
+      border-color: #ff5733;
+      box-shadow: 0 4px 8px rgba(255,87,51,0.2);
+    }
+    /* Search Suggestions Dropdown */
+    .suggestions {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: #fff;
+      border: 1px solid #ddd;
+      border-top: none;
+      z-index: 10;
+      display: none;
+    }
+    .suggestions li {
+      padding: 8px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    .suggestions li:hover { background: #f2f2f2; }
+    
+    /* Header Right Icons */
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    .header-right .icon {
+      position: relative;
+      cursor: pointer;
+    }
+    .header-right .icon img { width: 24px; }
+    .header-right .icon span {
+      position: absolute;
+      top: -5px;
+      right: -10px;
+      background: #ff5733;
+      color: #fff;
+      padding: 2px 5px;
+      border-radius: 50%;
+      font-size: 12px;
+    }
+    /* Promo Banner in Header */
+    .promo {
+      font-size: 16px;
+      font-family: 'Courier New', Courier, monospace;
+      color: #ff5733;
+      animation: fadeInText 3s infinite alternate;
+    }
+    @keyframes fadeInText {
+      0% { opacity: 0.5; }
+      100% { opacity: 1; }
+    }
+    
+    /* Trending Slider */
+    .trending-slider {
+      margin: 20px 0;
+      border-radius: 10px;
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+    .trending-slider img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      display: none;
+      transition: transform 0.6s ease, opacity 0.6s ease;
+    }
+    .trending-slider img.active {
+      display: block;
+      transform: translateZ(0);
+      opacity: 1;
+    }
+    .trending-slider img:hover {
+      transform: scale(1.05);
+    }
+    
+    /* Sections for Festivals and Winter Collections */
+    .section {
+      background: #fff;
+      margin: 20px 0;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .section:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 24px rgba(0,0,0,0.2);
+    }
+    .section h2 {
+      margin-bottom: 10px;
+      color: #2c3e50;
+    }
+    .section p {
+      color: #555;
+      line-height: 1.6;
+    }
+    
+    /* Feature Buttons */
+    .feature-buttons {
+      display: flex;
+      justify-content: center;
+      margin: 20px 0;
+      gap: 20px;
+    }
+    .feature-buttons button {
+      padding: 12px 20px;
+      border: none;
+      border-radius: 8px;
+      background: linear-gradient(45deg, #ff5733, #ff8a33);
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .feature-buttons button:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    }
+    
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 15px;
+      background: #2c3e50;
+      color: #fff;
+      font-size: 14px;
+      border-radius: 10px;
+      margin: 20px 0;
+    }
+  </style>
 </head>
 <body>
-
-<header>
-    <div class="logo">Shop Logo</div>
-    <div class="search-bar">
-        <input type="text" id="searchText" value="Joggers">
+  <!-- Header with Navigation, Search & Icons -->
+  <header>
+    <div class="container header-inner">
+      <div class="logo">Shop Logo</div>
+      
+      <!-- Navigation Menu -->
+      <nav>
+        <ul class="nav-menu">
+          <li><a href="#">Home</a></li>
+          <li>
+            <a href="#">Shop</a>
+            <ul class="dropdown">
+              <li><a href="#">Men</a></li>
+              <li><a href="#">Women</a></li>
+              <li><a href="#">Kids</a></li>
+              <li><a href="#">Accessories</a></li>
+            </ul>
+          </li>
+          <li><a href="#">Deals</a></li>
+          <li>
+            <a href="#">Categories</a>
+            <ul class="dropdown">
+              <li><a href="#">Sportswear</a></li>
+              <li><a href="#">Casual</a></li>
+              <li><a href="#">Formal</a></li>
+              <li><a href="#">Outdoor</a></li>
+            </ul>
+          </li>
+          <li><a href="#">Help</a></li>
+        </ul>
+      </nav>
+      
+      <!-- Advanced Search Container -->
+      <div class="search-container">
+        <input type="text" id="searchText" placeholder="Search for products..." autocomplete="off" />
+        <ul class="suggestions" id="suggestions">
+          <!-- Suggestions appended here dynamically -->
+        </ul>
+      </div>
+      
+      <!-- Header Right Icons & Promo -->
+      <div class="header-right">
+        <div class="icon">
+          <img src="https://cdn-icons-png.flaticon.com/512/263/263142.png" alt="Cart" />
+          <span>3</span>
+        </div>
+        <div class="icon">
+          <img src="https://cdn-icons-png.flaticon.com/512/1077/1077035.png" alt="Wishlist" />
+        </div>
+        <div class="promo">Agta Trending</div>
+      </div>
     </div>
-    <div class="promo">Presenting All New 'Agta Trending Collection'</div>
-</header>
-
-<section class="slideshow-container">
-    <img class="slides" src="poster1.jpg" onclick="openProductPage()">
-    <img class="slides" src="poster2.jpg" onclick="openProductPage()">
-    <img class="slides" src="poster3.jpg" onclick="openProductPage()">
-</section>
-
-<section class="main-content">
-    <div class="left-box">Keep XYZ for fun Like Father's Day, Holi, Diwali</div>
-    <div class="center-box"><img src="featured-person.jpg" alt="Featured Person"></div>
-    <div class="right-box">All new winter collection OR Denim Trends</div>
-</section>
-
-<section class="seasonal-section">
-    <h2>Festive & Ethnic Vibes</h2>
-    <p>Explore seasonal collections featuring traditional wear for Diwali, Holi, and special occasions.</p>
-</section>
-
-<section class="weather-section">
-    <h2>Weather-Inspired Collection</h2>
-    <p>Get ready for the season! Hoodies for winters, breathable fabrics for summers.</p>
-</section>
-
-<footer>
-    4-5 people types ka footer coming in & going
-</footer>
-
-<script>
-    let items = ["Joggers", "Sweatshirts", "Jeans", "T-Shirts"];
-    let index = 0;
-
-    function updateSearchText() {
-        document.getElementById("searchText").value = items[index];
-        index = (index + 1) % items.length;
-    }
-    setInterval(updateSearchText, 2000);
-
+  </header>
+  
+  <div class="container">
+    <!-- Trending Slider -->
+    <section class="trending-slider">
+      <img class="slide active" src="https://media.istockphoto.com/id/1314274760/photo/sport-pants.jpg?s=612x612&w=is&k=20&c=j3vdk9-K1ZMh7hkkJegDzb_xQzUra64PTJcnW5OF4q4=" alt="Trending Clothing 1" />
+      <img class="slide" src="https://media.istockphoto.com/id/496412648/photo/young-bearded-male-in-sport-casual-clothes-looking-at-camera.jpg?s=612x612&w=is&k=20&c=ZEZcrjwSTHrOW6L_YYEuIE2Wu4itkX7VHny9giPZ4Yw=" alt="Trending Clothing 2" />
+    </section>
+    
+    <!-- Festivals Section -->
+    <section class="section festivals-section">
+      <h2>Aane Wale Festivals</h2>
+      <p>Discover festive collections specially curated for upcoming festivals. Stay trendy and be in style this season with our vibrant designs.</p>
+    </section>
+    
+    <!-- Winter Collections Section -->
+    <section class="section winter-section">
+      <h2>All New Winter Collections</h2>
+      <p>Embrace the chill with our latest winter apparel. Find stylish, cozy essentials to combat the cold and make a statement.</p>
+    </section>
+    
+    <!-- Feature Buttons -->
+    <section class="feature-buttons">
+      <button>Cart</button>
+      <button>Wishlist</button>
+      <button>Account Centre</button>
+      <button>More</button>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+      4-5 people types ka footer coming in &amp; going
+    </footer>
+  </div>
+  
+  <script>
+    // Trending slider functionality
     let slideIndex = 0;
+    const slides = document.getElementsByClassName("slide");
     function showSlides() {
-        let slides = document.getElementsByClassName("slides");
-        for (let i = 0; i < slides.length; i++) {
-            slides[i].style.display = "none";
-        }
-        slideIndex++;
-        if (slideIndex > slides.length) { slideIndex = 1; }
-        slides[slideIndex - 1].style.display = "block";
-        setTimeout(showSlides, 3000);
+      for (let i = 0; i < slides.length; i++) {
+        slides[i].classList.remove("active");
+      }
+      slideIndex++;
+      if (slideIndex > slides.length) slideIndex = 1;
+      slides[slideIndex - 1].classList.add("active");
+      setTimeout(showSlides, 3000);
     }
     showSlides();
-
-    function openProductPage() {
-        window.location.href = "product-page.html";
-    }
-</script>
-
+    
+    // Search suggestion functionality
+    const searchInput = document.getElementById("searchText");
+    const suggestions = document.getElementById("suggestions");
+    const suggestionItems = ["Trending", "New Arrivals", "Best Sellers", "Discounts", "Sportswear", "Casual", "Formal"];
+    
+    searchInput.addEventListener("keyup", function() {
+      const value = this.value.toLowerCase();
+      suggestions.innerHTML = "";
+      if (value) {
+        const filtered = suggestionItems.filter(item => item.toLowerCase().includes(value));
+        filtered.forEach(item => {
+          const li = document.createElement("li");
+          li.textContent = item;
+          li.addEventListener("click", function() {
+            searchInput.value = item;
+            suggestions.innerHTML = "";
+          });
+          suggestions.appendChild(li);
+        });
+        suggestions.style.display = filtered.length ? "block" : "none";
+      } else {
+        suggestions.style.display = "none";
+      }
+    });
+    
+    document.addEventListener("click", function(e) {
+      if (!searchInput.contains(e.target)) suggestions.style.display = "none";
+    });
+  </script>
 </body>
 </html>
