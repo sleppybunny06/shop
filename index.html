@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop Webpage</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #fff;
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background-color: #f4f4f4;
+        }
+        .logo {
+            flex: 1;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .search-bar {
+            flex: 2;
+            text-align: center;
+        }
+        .search-bar input {
+            width: 80%;
+            padding: 10px;
+            font-size: 16px;
+        }
+        .promo {
+            flex: 1;
+            text-align: right;
+            font-size: 20px;
+            font-weight: bold;
+            color: #ff5733;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        .slideshow-container {
+            position: relative;
+            max-width: 100%;
+            margin: auto;
+        }
+        .slides {
+            display: none;
+            width: 100%;
+            cursor: pointer;
+        }
+        .main-content {
+            display: flex;
+            padding: 20px;
+        }
+        .left-box, .center-box, .right-box {
+            flex: 1;
+            margin: 10px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            text-align: center;
+        }
+        footer {
+            text-align: center;
+            padding: 15px;
+            background-color: #f4f4f4;
+        }
+        .seasonal-section, .weather-section {
+            text-align: center;
+            padding: 20px;
+            background-color: #eee;
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo">Shop Logo</div>
+    <div class="search-bar">
+        <input type="text" id="searchText" value="Joggers">
+    </div>
+    <div class="promo">Presenting All New 'Agta Trending Collection'</div>
+</header>
+
+<section class="slideshow-container">
+    <img class="slides" src="poster1.jpg" onclick="openProductPage()">
+    <img class="slides" src="poster2.jpg" onclick="openProductPage()">
+    <img class="slides" src="poster3.jpg" onclick="openProductPage()">
+</section>
+
+<section class="main-content">
+    <div class="left-box">Keep XYZ for fun Like Father's Day, Holi, Diwali</div>
+    <div class="center-box"><img src="featured-person.jpg" alt="Featured Person"></div>
+    <div class="right-box">All new winter collection OR Denim Trends</div>
+</section>
+
+<section class="seasonal-section">
+    <h2>Festive & Ethnic Vibes</h2>
+    <p>Explore seasonal collections featuring traditional wear for Diwali, Holi, and special occasions.</p>
+</section>
+
+<section class="weather-section">
+    <h2>Weather-Inspired Collection</h2>
+    <p>Get ready for the season! Hoodies for winters, breathable fabrics for summers.</p>
+</section>
+
+<footer>
+    4-5 people types ka footer coming in & going
+</footer>
+
+<script>
+    let items = ["Joggers", "Sweatshirts", "Jeans", "T-Shirts"];
+    let index = 0;
+
+    function updateSearchText() {
+        document.getElementById("searchText").value = items[index];
+        index = (index + 1) % items.length;
+    }
+    setInterval(updateSearchText, 2000);
+
+    let slideIndex = 0;
+    function showSlides() {
+        let slides = document.getElementsByClassName("slides");
+        for (let i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+        slideIndex++;
+        if (slideIndex > slides.length) { slideIndex = 1; }
+        slides[slideIndex - 1].style.display = "block";
+        setTimeout(showSlides, 3000);
+    }
+    showSlides();
+
+    function openProductPage() {
+        window.location.href = "product-page.html";
+    }
+</script>
+
+</body>
+</html>
